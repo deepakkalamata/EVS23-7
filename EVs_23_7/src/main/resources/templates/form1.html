@@ -1,0 +1,208 @@
+<!-- a comment in html 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Form</title>
+    <style>
+      /* Basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      form {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 5px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Station Form</h2>
+    <form id="stationForm">
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" readonly />
+      </div>
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" readonly />
+      </div>
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" readonly />
+      </div>
+      <div class="form-group">
+        <label for="station">Station:</label>
+        <input type="text" id="station" name="station" readonly />
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+
+    <script>
+      // Function to retrieve country, state, city, and station data from the URL
+      function getStationDataFromURL() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const country = urlParams.get("country");
+        const state = urlParams.get("state");
+        const city = urlParams.get("city");
+        const station = urlParams.get("station");
+        return { country, state, city, station };
+      }
+
+      // Function to fill form fields with data from the URL
+      function fillFormFields() {
+        const { country, state, city, station } = getStationDataFromURL();
+        document.getElementById("country").value = country;
+        document.getElementById("state").value = state;
+        document.getElementById("city").value = city;
+        document.getElementById("station").value = station;
+      }
+
+      // Call the function when the page loads
+      window.onload = fillFormFields;
+    </script>
+  </body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Form</title>
+    <style>
+      /* Basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      form {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 8px 16px;
+        border-radius: 5px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Station Form</h2>
+    <form id="stationForm" onsubmit="return submitForm()">
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" readonly />
+      </div>
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" readonly />
+      </div>
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" readonly />
+      </div>
+      <div class="form-group">
+        <label for="station">Station:</label>
+        <input type="text" id="station" name="station" readonly />
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+
+    <script>
+      // Function to retrieve country, state, city, and station data from the URL
+      function getStationDataFromURL() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const country = urlParams.get("country");
+        const state = urlParams.get("state");
+        const city = urlParams.get("city");
+        const station = urlParams.get("station");
+        return { country, state, city, station };
+      }
+
+      // Function to fill form fields with data from the URL
+      function fillFormFields() {
+        const { country, state, city, station } = getStationDataFromURL();
+        document.getElementById("country").value = country;
+        document.getElementById("state").value = state;
+        document.getElementById("city").value = city;
+        document.getElementById("station").value = station;
+      }
+
+      // Call the function when the page loads
+      window.onload = fillFormFields;
+
+      // Function to submit the form
+      function submitForm() {
+        const country = document.getElementById("country").value;
+        const state = document.getElementById("state").value;
+        const city = document.getElementById("city").value;
+        const station = document.getElementById("station").value;
+
+        // Redirect to file 4 with form data as URL parameters
+        const url = `http://localhost:9090/dynamicSlot?country=${encodeURIComponent(
+          country
+        )}&state=${encodeURIComponent(state)}&city=${encodeURIComponent(
+          city
+        )}&station=${encodeURIComponent(station)}`;
+        window.location.href = url;
+
+        // Prevent form submission
+        return false;
+      }
+      
+    </script>
+  </body>
+</html>

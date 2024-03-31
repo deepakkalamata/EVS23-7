@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slot Booking Form</title>
+    <style>
+      .container {
+        width: 50%;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .form-group button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Slot Booking Form</h2>>
+      <for id="bookingForm"onsubmit="return submitForm()"">
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <input type="text" id="country" name="country" readonly required /> 
+        </div>
+        <div class="form-group">
+          <label for="state">State:</label>
+          <input type="text" id="state" name="state" readonly required />
+        </div>
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input type="text" id="city" name="city" readonly required />
+        </div>
+        <div class="form-group">
+          <label for="station">Station:</label>
+          <input type="text" id="station" name="station" readonly required />
+        </div>
+        <div class="form-group">
+          <label for="slot">Slot:</label>
+          <input type="text" id="slot" name="slot" readonly required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="vehicle">Vehicle Number:</label>
+          <input type="text" id="vehicle" name="vehicle" required />
+        </div>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="otp">OTP:</label>
+          <input type="text" id="otp" name="otp" readonly required />
+        </div>
+        <button type="submit">Book Slot</button>
+      </for>
+    </div>
+    <div id="header"></div>
+    <script>
+      // Function to retrieve country, state, city, and station data from the URL
+      function getStationDataFromURL() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const country = urlParams.get("country");
+        const state = urlParams.get("state");
+        const city = urlParams.get("city");
+        const station = urlParams.get("station");
+        const otp = generateOTP();
+        return { country, state, city, station, otp };
+      }
+
+      // Function to fill form fields with data from the URL
+      //function fillFormFields() {
+      //  const { country, state, city, station } = getStationDataFromURL();
+      //  document.getElementById("country").value = country;
+      //  document.getElementById("state").value = state;
+      //  document.getElementById("city").value = city;
+      //  document.getElementById("station").value = station;
+      //  document.getElementById("otp").value = otp;
+      //}
+
+      //Function to populate form fields from URL parameters
+      function populateFormFields() {
+        var urlParams = new URLSearchParams(window.location.search);
+        document.getElementById("country").value = urlParams.get("country");
+        document.getElementById("state").value = urlParams.get("state");
+        document.getElementById("city").value = urlParams.get("city");
+        document.getElementById("station").value = urlParams.get("station");
+        document.getElementById("slot").value = urlParams.get("slotId");
+        document.getElementById("otp").value = generateOTP();
+      }
+
+      // Function to submit form
+      function submitForm() {
+        // Generate 6-digit OTP
+        var otp = generateOTP();
+        console.log("OTP:", otp);
+        // Send email with OTP and form data
+        sendEmail(document.getElementById("email").value, otp);
+        return true;
+      }
+
+      // Function to generate a 6-digit OTP
+      function generateOTP() {
+        var otp = Math.floor(100000 + Math.random() * 900000);
+        return otp;
+      }
+
+      // Function to send OTP and form data to email
+      function sendEmail(email, otp) {
+        // Here you can implement the logic to send the email using a server-side script
+        // For example, you can use AJAX or fetch to send the email details to your server,
+        // and then your server can use a library like Nodemailer (in Node.js) to send the email.
+        console.log("Sending email to", email, "with OTP:", otp);
+      }
+
+      // Call the populateFormFields function when the page loads
+      window.onload = function () {
+        populateFormFields();
+      };
+    </script>
+  </body>
+</html>

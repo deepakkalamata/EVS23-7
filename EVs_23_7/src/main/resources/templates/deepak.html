@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fetching data from the API</title>
+
+    <style>
+        .slots-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .slot-button {
+            width: 100px;
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .slot-green {
+            background-color: lightgreen;
+        }
+
+        .slot-red {
+            background-color: tomato;
+            cursor: not-allowed;
+        }
+
+        .slot-orange {
+            background-color: orange;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+<h1>user:</h1>
+<ul></ul>
+<div class="slots-container" id="slots-container">
+    <!-- Slots will be dynamically generated here -->
+</div>
+
+<script>
+    // Fetch slot data from backend
+    fetch('http://localhost:9090/slot5/gettable')
+        .then((response) => response.json())
+        .then((data) => {
+            // Update slotsData array with data received from backend
+            const slotsData = data.map((slot) => ({
+                slot_id: slot.slot_id,
+                status: slot.status,
+                booking_status: slot.booking_status,
+                vehicle_number: slot.vehicle_number,
+            }));
+
+            // Call a function to handle further processing with updated slotsData
+            handleSlotData(slotsData);
+        })
+        .catch((error) => console.error("Error fetching slots:", error));
+
+    // Function to handle slot data
+    function handleSlotData(slotsData) {
+        // Your logic to handle the updated slotsData array
+        for (let i = 0; i < slotsData.length; i++) {
+            console.log(`Iteration ${i + 1} is completed.`);
+            console.log(slotsData[i]);
+        }
+
+        // Generate slot buttons dynamically
+        const slotsContainer = document.getElementById("slots-container");
+        slotsData.forEach((slot) => {
+            const slotButton = createSlotButton(slot);
+            slotsContainer.appendChild(slotButton);
+        });
+    }
+
+    // Function to create slot buttons dynamically
+    function createSlotButton(slotData) {
+        const button = document.createElement("button");
+        button.setAttribute("id", slotData.slot_id);
+        button.classList.add("slot-button");
+        button.textContent = slotData.slot_id; // You can set any text you want here
+
+        // Assign color based on status and bookingStatus
+        if (slotData.status === 0 && slotData.booking_status === "UNBOOKED") {
+            button.classList.add("slot-green");
+            // Add click event listener for green slots
+            button.addEventListener("click", () => {
+                handleGreenSlotClick(slotData.slot_id);
+            });
+        } else if (
+            slotData.status === 0 &&
+            slotData.booking_status === "BOOKED"
+        ) {
+            button.classList.add("slot-red");
+            // Disable click event for red slots
+            button.disabled = true;
+            //alert("Already booked please select another slot");
+        } else if (
+            slotData.status === 1 &&
+            slotData.booking_status === "BOOKED"
+        ) {
+            button.classList.add("slot-orange");
+            // Disable click event for orange slots
+            button.disabled = true;
+            //alert("This slot is already reserved. Please select another slot.");
+        }
+
+        return button;
+    }
+
+    // Function to handle click on green slots
+    function handleGreenSlotClick(slot_id) {
+        // Handle click action here (e.g., navigate to another page)
+        console.log("Green slot clicked:", slot_id);
+        // Example: window.location.href = 'second.html?slotId=' + slotId;
+        // For now, let's just log the clicked slot ID
+        alert("Navigating to another page...");
+    }
+</script>
+</body>
+</html>
+

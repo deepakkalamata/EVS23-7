@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Slot Booking</title>
+	<style>
+		.slots-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.slot-button {
+			width: 100px;
+			height: 50px;
+			border: none;
+			border-radius: 5px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.slot-green {
+			background-color: lightgreen;
+		}
+
+		.slot-red {
+			background-color: tomato;
+			cursor: not-allowed;
+		}
+
+		.slot-orange {
+			background-color: orange;
+			cursor: not-allowed;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1 th:text="${name}"></h1>
+	<h1 th:text="${currentDate}"></h1>
+	<h1>Name of the Owner is <span th:text="${name}"></span></h1>
+	<div class="slots-container" id="slots-container">
+		<!-- Slots will be dynamically generated here -->
+	</div>
+
+	<script>
+
+
+
+
+		// Fetch slot data from backend
+		fetch('/localhost:9090/slot5/gettable')
+			.then(response => response.json())
+			.then(data => {
+				// Update slotsData array with data received from backend
+				const slotsData = data.map(slot => ({
+					slotId: slot.slotId,
+					status: slot.status,
+					bookingStatus: slot.bookingStatus
+				}));
+
+				// Call a function to handle further processing with updated slotsData
+				handleSlotData(slotsData);
+			})
+			.catch(error => console.error('Error fetching slots:', error));
+
+		// Function to handle slot data
+		function handleSlotData(slotsData) {
+			// Your logic to handle the updated slotsData array
+			console.log(slotsData);
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		const slotsData = [
+			{slotId: "slot1", status: 0, bookingStatus: "unbooked"},
+			{slotId: "slot2", status: 1, bookingStatus: "booked"},
+			{slotId: "slot3", status: 1, bookingStatus: "booked"},
+		];
+
+		// Function to create slot buttons dynamically
+		function createSlotButton(slotData) {
+			const button = document.createElement("button");
+			button.setAttribute("id", slotData.slotId);
+			button.classList.add("slot-button");
+			button.textContent = slotData.slotId; // You can set any text you want here
+
+			// Assign color based on status and bookingStatus
+			if (slotData.status === 0 && slotData.bookingStatus === "unbooked") {
+				button.classList.add("slot-green");
+				// Add click event listener for green slots
+				button.addEventListener("click", () => {
+					handleGreenSlotClick(slotData.slotId);
+				});
+			} else if (
+				slotData.status === 0 &&
+				slotData.bookingStatus === "booked"
+			) {
+				button.classList.add("slot-red");
+				// Disable click event for red slots
+				button.disabled = true;
+				//alert("Already booked please select another slot");
+			} else if (
+				slotData.status === 1 &&
+				slotData.bookingStatus === "booked"
+			) {
+				button.classList.add("slot-orange");
+				// Disable click event for orange slots
+				button.disabled = true;
+				//alert("This slot is already reserved. Please select another slot.");
+			}
+
+			return button;
+		}
+
+		// Function to handle click on green slots
+		function handleGreenSlotClick(slotId) {
+			// Handle click action here (e.g., navigate to another page)
+			console.log("Green slot clicked:", slotId);
+			// Example: window.location.href = 'second.html?slotId=' + slotId;
+			// For now, let's just log the clicked slot ID
+			alert("Navigating to another page...");
+		}
+
+		// Generate slot buttons dynamically
+		const slotsContainer = document.getElementById("slots-container");
+		slotsData.forEach((slot) => {
+			const slotButton = createSlotButton(slot);
+			slotsContainer.appendChild(slotButton);
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display Stations</title>
+    <style>
+      /* Basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center; /* Center align the station buttons */
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+      .form-container {
+        background-color: aqua;
+        width: 70vh;
+        height: 20vb;
+        display: flex;
+        flex-direction: column;
+      }
+      .station-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 12px 24px; /* Increased padding for button */
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        transition: background-color 0.3s; /* Add transition effect */
+        width: 200px; /* Set button width */
+        height: 40px; /* Set button height */
+        line-height: 40px; /* Center button text vertically */
+      }
+
+      .station-button:hover {
+        background-color: #45a049; /* Change background color on hover */
+      }
+
+      /* Center align form fields */
+      form {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        width: 150px;
+        padding: 8px;
+        border: 1px solid #8e4040;
+        border-radius: 20px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 12px 24px; /* Increased padding for button */
+        border-radius: 5px;
+        transition: background-color 0.3s; /* Add transition effect */
+      }
+
+      input[type="submit"]:hover {
+        background-color: #f7160b; /* Change background color on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Stations</h2>
+    <div id="stations"></div>
+
+    <script>
+      // Function to retrieve city and station data from the URL
+      function getCityAndStationsFromURL() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const country = urlParams.get("country");
+        const state = urlParams.get("state");
+        const city = urlParams.get("city");
+        const stationsString = urlParams.get("stations");
+        const stations = JSON.parse(decodeURIComponent(stationsString));
+        return { country, state, city, stations };
+      }
+
+      // Function to display stations
+      function displayStations() {
+        const { country, state, city, stations } = getCityAndStationsFromURL();
+        const stationsDiv = document.getElementById("stations");
+        const ul = document.createElement("ul");
+        stations.forEach((station) => {
+          const li = document.createElement("li");
+          const button = document.createElement("button");
+          button.classList.add("station-button");
+          button.textContent = station;
+          button.addEventListener("click", function () {
+            redirectToFormPage(country, state, city, station);
+          });
+          li.appendChild(button);
+          ul.appendChild(li);
+        });
+        stationsDiv.appendChild(ul);
+
+        // Populate form fields with city data
+        const form = document.createElement("form");
+        form.innerHTML = `
+          <div class = "form-container">
+            <div>
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" value="${country}" readonly>
+            </div>
+            <div>
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" value="${state}" readonly>
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" value="${city}" readonly>
+            </div>
+          </div>  
+        `;
+        stationsDiv.prepend(form);
+      }
+
+      // Function to redirect to form page with station data
+      function redirectToFormPage(country, state, city, station) {
+        const url = `http://localhost:9090/form1?country=${encodeURIComponent(
+          country
+        )}&state=${encodeURIComponent(state)}&city=${encodeURIComponent(
+          city
+        )}&station=${encodeURIComponent(station)}`;
+        window.location.href = url;
+      }
+
+      // Call the function when the page loads
+      window.onload = displayStations;
+    </script>
+  </body>
+</html>

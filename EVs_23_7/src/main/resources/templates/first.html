@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slot Booking</title>
+    <style>
+      .slots-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .slot-button {
+        width: 100px;
+        height: 50px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .slot-green {
+        background-color: lightgreen;
+      }
+
+      .slot-red {
+        background-color: tomato;
+        cursor: not-allowed;
+      }
+
+      .slot-orange {
+        background-color: orange;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slots-container">
+      <button
+        id="slot1"
+        class="slot-button slot-green"
+        data-status="0"
+        data-booking-status="unbooked"
+        onclick="navigateToBookingForm('slot1')"
+      >
+        Slot 1
+      </button>
+      <button
+        id="slot2"
+        class="slot-button slot-red"
+        data-status="0"
+        data-booking-status="booked"
+        onclick="bookSlot('slot2')"
+      >
+        Slot 2
+      </button>
+      <button
+        id="slot3"
+        class="slot-button slot-orange"
+        data-status="1"
+        data-booking-status="booked"
+        onclick="bookSlot('slot3')"
+      >
+        Slot 3
+      </button>
+      <button
+        id="slot4"
+        class="slot-button slot-green"
+        data-status="0"
+        data-booking-status="unbooked"
+        onclick="navigateToBookingForm('slot4')"
+      >
+        Slot 4
+      </button>
+    </div>
+
+    <script>
+      function navigateToBookingForm(slotId) {
+        var slot = document.getElementById(slotId);
+        var status = slot.getAttribute("data-status");
+        var bookingStatus = slot.getAttribute("data-booking-status");
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const country = urlParams.get("country");
+        const state = urlParams.get("state");
+        const city = urlParams.get("city");
+        const station = urlParams.get("station");
+        const url = `&country=${encodeURIComponent(
+          country
+        )}&state=${encodeURIComponent(state)}&city=${encodeURIComponent(
+          city
+        )}&station=${encodeURIComponent(station)}`;
+        if (status === "0" && bookingStatus === "unbooked") {
+          window.location.href = "second.html?slotId=" + slotId + url;
+        } else {
+          alert("This slot is already reserved. Please select another slot.");
+        }
+      }
+
+      function bookSlot(slotId) {
+        var slot = document.getElementById(slotId);
+        var status = slot.getAttribute("data-status");
+        var bookingStatus = slot.getAttribute("data-booking-status");
+        if (status === "0" && bookingStatus === "unbooked") {
+          // Perform booking logic here
+          console.log("Slot " + slotId + " booked successfully.");
+        } else {
+          alert("This slot is already reserved. Please select another slot.");
+        }
+      }
+    </script>
+  </body>
+</html>
