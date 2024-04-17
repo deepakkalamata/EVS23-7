@@ -60,5 +60,10 @@ public class slotController {
 		// first.html page called here; 
 	}
 	
-	
+	@GetMapping("/home")
+	public String station1Mapping4() {
+		System.out.println("inside form1 handler");
+		return "home";
+		// first.html page called here; 
+	}
 }

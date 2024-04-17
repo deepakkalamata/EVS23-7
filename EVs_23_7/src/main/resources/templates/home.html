@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Navbar</title>
+    <!-- Materialize CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Owl Carousel CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+    />
+    <link
+      rel="icon"
+      href="https://www.shutterstock.com/shutterstock/photos/2200387821/display_1500/stock-vector-electric-plug-icon-power-charging-energy-sign-electricity-technology-and-device-concept-isolated-2200387821.jpg"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <style>
+      /* Internal CSS */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ffffff; /* Change this to your desired track color */
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #b231e5;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #000000; /* Change this to your desired scrollbar color on hover */
+      }
+
+      nav {
+        background-color: #b231e5;
+        position: fixed;
+        width: 100%;
+        z-index: 10;
+        top: 0;
+        height: 64px;
+      }
+      nav .brand-logo {
+        margin-top: 5px;
+        margin-left: 20px;
+      }
+      .sidenav {
+        background-color: #b231e5;
+        height: auto;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+      }
+      .sidenav li {
+        background-color: #ff99e7;
+        border-radius: 10px;
+        height: 50px;
+        margin-top: 10px;
+        width: 250px;
+        text-align: center;
+      }
+	  .sidenav li a {
+	          font-weight: 700;
+	        }
+      .additional-options {
+        display: none; /* Initially hide the options */
+        position: absolute;
+        background-color: transparent;
+
+        padding: 10px;
+        z-index: 999;
+        width: 300px; /* Ensure the options appear on top of other elements */
+      }
+
+      /* Show additional options when hovering over the Service menu item */
+      .service:hover .additional-options {
+        display: block;
+      }
+      .sub-options {
+        background-color: #00093c;
+        border-radius: 20px;
+        width: 200px;
+        text-align: center;
+        height: 50px;
+
+        border: none;
+        border-radius: 15px;
+        background-color: #b231e5;
+        box-shadow: -6px -6px 10px #cb7aeb, 6px 6px 10px #00000026;
+        color: #2e4f5b;
+        cursor: pointer;
+      }
+      .sub-options hover {
+        box-shadow: 2px 2px 2px #cb7aeb, -2px -2px 2px #00000026;
+        border-radius: 15px;
+        height: 50px;
+        text-align: center;
+      }
+      .sub-options a {
+        background-color: #ffffff;
+        border-radius: 15px;
+        color: #00093c;
+        height: 50px;
+        text-align: center;
+		font-weight: 700;
+      }
+      @media (max-width: 992px) {
+        nav .brand-logo {
+          margin-left: 0;
+        }
+      }
+
+      /* Custom CSS for image height
+      .owl-carousel .owl-item img {
+        margin: auto;
+        padding: 50px;
+        max-width: 800px;
+        max-height: 450px;
+        width: auto;
+        height: auto;
+      }
+
+      .owl-nav button.owl-prev,
+      .owl-nav button.owl-next {
+        font-size: 30px;
+      }
+
+      .carousel-container {
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .owl-carousel {
+        max-width: 600px;
+        width: 100%;
+      */
+
+      .header {
+        position: fixed;
+      }
+      .body {
+        align-items: end;
+        justify-items: center;
+      }
+      /* Internal CSS */
+      .owl-carousel .owl-item img {
+        margin: auto;
+        width: 100% !important;
+        height: 50vh;
+      }
+      .owl-carousel .owl-stage {
+        display: flex;
+        justify-content: center;
+      }
+
+      .owl-carousel .owl-stage img {
+        max-width: 100%;
+      }
+      /* Centering the carousel */
+      .carousel-container {
+        position: relative;
+        background-size: cover; /* Cover the entire viewport */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat;
+        /* background-color: rgb(255, 255, 255);*/
+        display: flex;
+        justify-content: center;
+        width: 100%; /* Occupy full width of the page */
+        background-color: transparent;
+      }
+      .owl-carousel {
+        max-width: 100vw; /* Set maximum width for the carousel */
+        width: 100%; /* Occupy full width within the container */
+        height: 58vh;
+        background-color: transparent;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        border-radius: 30px;
+      }
+
+      @media (max-width: 768px) {
+        .owl-carousel .owl-item img {
+          max-width: 90%;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .owl-carousel .owl-item img {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .owl-carousel .owl-item img {
+          max-width: 100%;
+        }
+      }
+
+      /* Responsive centering */
+      @media (max-width: 600px) {
+        .carousel-container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+      .card {
+        position: relative;
+        background-color: transparent;
+        border-radius: 10px;
+        box-shadow: 0 0 200px rgba(0, 0, 0, 0.701);
+        max-width: 800px; /* Adjust as needed */
+        max-height: 300px;
+        color: rgb(0, 0, 0);
+      }
+      /* Card styles */
+      section {
+        background-image: url("/images/Background\ image.png");
+        background-image: no-repeat;
+        align-items: end;
+        justify-items: center;
+        position: relative;
+        margin-top: 64px;
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+      }
+      .card-dive {
+        margin: 20px;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        align-items: end;
+        justify-items: center;
+        background-color: transparent;
+      }
+      .water {
+        background-image: url("https://media2.giphy.com/media/fXFMtvW5L6bYI/giphy.gif");
+        background-position: center;
+        background-size: cover;
+        color: transparent;
+        -webkit-background-clip: text;
+        font-size: 100px;
+        text-align: center;
+        font-family: "Arial Black", Arial, sans-serif;
+      }
+      .welcome {
+        background-image: url("https://media2.giphy.com/media/fXFMtvW5L6bYI/giphy.gif");
+        background-position: center;
+        background-size: cover;
+        color: transparent;
+        -webkit-background-clip: text;
+        font-size: 70px;
+        text-align: center;
+        font-family: "Arial Black", Arial, sans-serif;
+      }
+      .welcom-message {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: self-end; /* Center vertically */
+        align-items: end;
+        justify-items: center;
+        background-color: transparent;
+
+        max-height: 250px;
+      }
+
+      .welcom-message p {
+        overflow: hidden; /* Ensures the content is not revealed until the animation */
+        border-right: 0.15em solid transparent; /* The typwriter cursor */
+        white-space: nowrap; /* Keeps the content on a single line */
+        margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+        animation: typing 3.5s steps(40, end),
+          blink-caret 0.75s step-end infinite;
+      }
+
+      /* The typing effect */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      /* The typewriter cursor effect */
+      @keyframes blink-caret {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: transparent;
+        }
+        100% {
+          display: none;
+        }
+      }
+      .description {
+        background-color: transparent;
+        height: 300px;
+        margin-top: 0px;
+      }
+      .inner-description h1 {
+        font-family: "Arial Black", Arial, sans-serif;
+        font-size: 60px;
+        color: #00093c;
+        width: 60vw;
+        margin-left: 20px;
+      }
+      .inner-description p {
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-size: 30px;
+        color: #ffffff;
+        width: 90vw;
+        margin: 20px;
+        margin: 10px;
+      }
+      .additional-info {
+        text-align: center;
+      }
+      .owl-carousel img {
+        border-radius: 30px;
+
+        width: 100vw;
+        height: 50vh;
+      }
+      footer {
+        width: 100%;
+        position: absolute;
+        background: linear-gradient(to right, #00093c, #2d0b00);
+        color: #fff;
+        padding: 100px 0;
+        padding-bottom: 0px;
+        font-size: 13px;
+        line-height: 20px;
+      }
+      .row {
+        width: 85%;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+      .col {
+        flex-basis: 25%;
+        padding: 10px;
+      }
+      .col h3 {
+        width: fit-content;
+        margin-bottom: 40px;
+        position: relative;
+        font-size: 30px;
+      }
+      .email-id {
+        width: fit-content;
+        border-bottom: 1px solid #ccc;
+        margin: 20px 0;
+      }
+      ul li {
+        list-style: none;
+        margin-bottom: 12px;
+      }
+      ul li a {
+        text-decoration: none;
+        color: #fff;
+      }
+      .row-copyright {
+        background-color: transparent;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        font-size: large;
+
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding-bottom: 40px;
+      }
+      .faq {
+        margin: 30px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        background-color: whitesmoke;
+        display: flex;
+        flex-direction: column;
+        line-height: 40px;
+        justify-content: center;
+      }
+      .faq-question {
+        cursor: pointer;
+        margin: 0 0 0 10px;
+        padding-left: 20px;
+        font-weight: 700;
+        font-size: medium;
+      }
+
+      .faq-answer {
+        display: none;
+        padding-left: 30px;
+        font-weight: 500;
+      }
+      .faq-item {
+        border-radius: 20px;
+        border-color: #00093c;
+        border-style: solid;
+        width: 97vw;
+        display: block;
+        margin: 10px;
+      }
+      .faq-heading {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <!-- Navbar -->
+      <nav>
+        <div class="nav-wrapper">
+          <!-- Replace the text with an image -->
+          <a href="#!" class="brand-logo"
+            ><img
+              src="/images/EV_s_237-removebg-preview.png"
+              alt="Logo"
+              style="max-width: 150px; max-height: 80px"
+          /></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+          </a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="#">Home</a></li>
+            <li class="service">
+              <a href="#">Service</a>
+              <!-- Additional options -->
+              <ul class="additional-options">
+                <li class="sub-options"><a href="http://localhost:9090/new">Booking</a></li>
+                
+              </ul>
+            </li>
+            <li class="service">
+              <a href="#">Product</a>
+              <!-- Additional options -->
+              <ul class="additional-options">
+                <li class="sub-options"><a href="#">Charging</a></li>
+              </ul>
+            </li>
+            <li><a href="#">About</a></li>
+            <!-- Service menu item with additional options -->
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Side Nav -->
+      <ul class="sidenav" id="mobile-demo">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li class="service">
+          <a href="#">Product</a>
+          <ul class="additional-options">
+            <li class="sub-options"><a href="#">Charging</a></li>
+          </ul>
+        </li>
+        <li class="service">
+          <a href="#">Service</a>
+          <!-- Additional options -->
+          <ul class="additional-options">
+            <li class="sub-options"><a href="http://localhost:9090/new">Booking</a></li>
+            
+          </ul>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </header>
+
+    <section>
+      <div class="welcom-message">
+        <p class="welcome">Welcome to <span class="water">EV's23/7</span></p>
+      </div>
+
+      <div class="carousel-container">
+        <!-- Owl Carousel -->
+        <div class="owl-carousel">
+          <!-- Dummy Images -->
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="description">
+        <div class="inner-description">
+          <h1>Empowering your journey with sustainable charging solutions</h1>
+          <p>
+            Fuel your journey sustainably with our EV charging solutions.
+            Convenient, reliable, and eco-friendly options available.Join us in
+            driving towards a greener future today!
+          </p>
+        </div>
+      </div>
+      <div class="additional-info">
+        <h1>_______________________________________</h1>
+        <p>.</p>
+      </div>
+
+      <div class="faq">
+        <h4 class="faq-heading">Frequently Asked Questions (FAQs)</h4>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleAnswer(1)">
+            What is the cost of an AC EV charger?
+          </div>
+          <div class="faq-answer" id="answer1">
+            Ans : The price range of an AC EV Charger starts from 20 thousand
+            and goes upto 75 thousand.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleAnswer(2)">
+            What is an AC EV charger?
+          </div>
+          <div class="faq-answer" id="answer2">
+            Ans: AC EV charger is an electric vehicle charger that uses
+            alternating current (AC) to charge the vehicle's battery.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleAnswer(3)">
+            Which EV charger is faster AC or DC?
+          </div>
+          <div class="faq-answer" id="answer3">
+            Ans: DC chargers are faster than AC chargers for electric vehicles.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleAnswer(4)">
+            What is the cost of 7.2 kW EV charger in India?
+          </div>
+          <div class="faq-answer" id="answer4">
+            The cost of a 7.2 kW EV charger in India typically ranges between
+            30,000 to 40,000.
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="row">
+          <div class="col">
+            <p>Hey there Welcome to EV"s23/7</p>
+          </div>
+          <div class="col">
+            <h3>Office</h3>
+            <p>Main Road</p>
+            <p>Near by public school</p>
+            <p>Andhrapradesh, PIN 534XXX, India</p>
+            <p class="emil-id">example123@gmail.com</p>
+            <h6>+91 - 9876543210</h6>
+          </div>
+          <div class="col">
+            <h3>Links</h3>
+            <ul>
+              <li><a href="">Home</a></li>
+              <li><a href="">About Us</a></li>
+              <li><a href="">Our Product</a></li>
+              <li><a href="">Contct Us</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Follow us</h3>
+            <ul>
+              <li>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-whatsapp"></i> Whatsapp</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-copyright">
+          <p>
+            Copyright 2024 © EV's23/7: Privacy Policy. Brand Guidelines. Our
+            Capability. Legal Disclaimer. Terms of use
+          </p>
+        </div>
+      </footer>
+    </section>
+
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      // Initialize Materialize components
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".sidenav");
+        var instances = M.Sidenav.init(elems);
+      });
+    </script>
+
+    <!-- Owl Carousel JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+      // Initialize Owl Carousel
+      $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({
+          loop: true,
+          padding: 50,
+          margin: 100,
+          nav: true,
+          autoplay: true, // Auto Play
+          autoplayTimeout: 1500, // Auto Play Interval
+          autoplayHoverPause: true, // Pause on Hover
+          responsive: {
+            0: {
+              items: 1,
+            },
+          },
+        });
+      });
+    </script>
+    <script>
+      function toggleAnswer(id) {
+        var answer = document.getElementById("answer" + id);
+        if (answer.style.display === "none") {
+          answer.style.display = "block";
+        } else {
+          answer.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>

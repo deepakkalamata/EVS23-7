@@ -45,26 +45,45 @@
 </div>
 
 <script>
+	
     // Function to fetch slot data from backend and update UI
-    function fetchAndUpdateSlots() {
+	// function fetchAndUpdateSlots() {
         // Fetch slot data from backend
-        fetch('http://localhost:9090/slot5/gettable')
-            .then((response) => response.json())
-            .then((data) => {
+		//    fetch('http://localhost:9090/slot5/gettable')
+		//     .then((response) => response.json())
+		//    .then((data) => {
                 // Update slotsData array with data received from backend
-                const slotsData = data.map((slot) => ({
-                    slot_id: slot.slot_id,
-                    status: slot.status,
-                    booking_status: slot.booking_status,
-                    vehicle_number: slot.vehicle_number,
-                }));
+				//        const slotsData = data.map((slot) => ({
+					//           slot_id: slot.slot_id,
+					//           status: slot.status,
+					//          booking_status: slot.booking_status,
+					//           vehicle_number: slot.vehicle_number,
+				//       }));
 
                 // Call a function to handle further processing with updated slotsData
-                handleSlotData(slotsData);
-            })
-            .catch((error) => console.error("Error fetching slots:", error));
-    }
-
+				//       handleSlotData(slotsData);
+			//    })
+			//    .catch((error) => console.error("Error fetching slots:", error));
+		// }
+		function fetchAndUpdateSlots() {
+		       // Fetch all slot data from backend
+		       fetch('http://localhost:9090/slot5/gettable')
+		           .then((response) => response.json())
+		           .then((data) => {
+		               // Extract station from URL query string
+		               const urlParams = new URLSearchParams(window.location.search);
+		               const station = urlParams.get('station');
+		
+		               // Filter slots based on the specified station
+		               const slotsData = data.filter((slot) => slot.station === station);
+		
+		               // Call a function to handle further processing with filtered slotsData
+		               handleSlotData(slotsData);
+		           })
+		           .catch((error) => console.error("Error fetching slots:", error));
+		   }
+		
+		
     // Function to handle slot data
     function handleSlotData(slotsData) {
         // Your logic to handle the updated slotsData array

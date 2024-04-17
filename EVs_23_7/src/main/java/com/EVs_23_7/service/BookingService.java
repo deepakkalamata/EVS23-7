@@ -20,4 +20,8 @@ public class BookingService {
 		
 		return bookingRepo.findAll();
 	}
+//	public boolean existsByOtp(Integer otp) {
+//		// TODO Auto-generated method stub
+//		 return bookingRepo.existsByOtp(otp);
+//	}
 }
